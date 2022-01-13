@@ -3,4 +3,4 @@
 Управление
 w a s d 
 
-https://ru.wikipedia.org/wiki/Пятнашки 
+https://ru.wikipedia.org/wiki/Игра_в_15
