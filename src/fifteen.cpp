@@ -2,33 +2,17 @@
 
 int main()
 {
-    windowSetup();
     while(1)
     {
         readSuccess=readStats();
         titlescreen();
         gameOn();
         updateStats();
-        cursorLocation(3, 14);
         cout<<"WIN WIN WIN";
-        cursorLocation(3, 16);
         system("pause");
         reset();
     }
     return 0;
-}
-
-void windowSetup()
-{
-    srand((unsigned)time(NULL));                       
-    COORD coord={80,30};
-    SMALL_RECT Rect={0,0,79,29};
-    CONSOLE_CURSOR_INFO lpCursor = {1, false};          
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTitleA("oneFIVE++");
-    SetConsoleWindowInfo(console, TRUE, &Rect);        
-    SetConsoleScreenBufferSize(console, coord);         
-    SetConsoleCursorInfo(console, &lpCursor);           
 }
 
 bool readStats()                            
@@ -43,26 +27,6 @@ bool readStats()
    data.read((char*)&stored,sizeof(stats));
    data.close();
    return true;                            
-}
-
-BOOL cursorLocation(const WORD x,const WORD y)              
-{
-    COORD coordinates;                                      
-    coordinates.X=x;
-    coordinates.Y=y;
-    return SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coordinates);
-}
-
-void menuoutline(const string &main,const string &op1,const string &sel1,const string &op2,const string &sel2,const string &op3,const string &sel3)     
-{
-    cursorLocation(3,12);
-    cout<<main;
-    cursorLocation(3,14);
-    cout<<op1<<"\t"<<sel1;
-    cursorLocation(3,16);
-    cout<<op2<<"\t"<<sel2;
-    cursorLocation(3,18);
-    cout<<op3<<"\t"<<sel3;
 }
 
 void createboard()                                      
@@ -116,29 +80,16 @@ char input(char Low)
     return (Low>90)?Low-=32:Low;                                
 }
 
-void displayboardFrame(){                                       
-    short int ypos = 2, posX = 29, posY = 2;
-    system("cls");
-    for( ; posY < 10 ; ++posY){
-        cursorLocation(posX, posY++);
-        cout<<"*********************";                        
-        for( ; posX < 50 ; posX += 5){
-            cursorLocation(posX, posY);
-            printf("*");
-        }
-        posX = 29;   
-    }
-    cursorLocation(posX, posY);
-    cout<<"*********************";  
-}
 
 int displayboard()                                             
 {
-    short int zero, posI = 0, posJ = 0;                        
+    system("cls");
+    short int zero, posI = 0, posJ = 0;                         
     short int posY=3, posX = 30;                                
     for( ; posY < 10 ; posY += 2, posI++){
+        cout << endl;
         for( ; posX < 50 ; posX += 5, posJ++){
-            cursorLocation(posX, posY);
+            
             if(board[posI][posJ]){
                 cout<<right<<setw(4)<<board[posI][posJ];
             }
@@ -146,21 +97,20 @@ int displayboard()
                 cout<<"    ";
                 zero = (10 * posI) + posJ;
             }
+            
         }
         posJ = 0;
         posX = 30;
+        
     }
-    cursorLocation(27, 12);
-    cout<<"moves "<<moveCount;              
-    cursorLocation(3, 14);
-    cout<<"esc\tpause";                           
-    cursorLocation(3, 16);
-    cout<<"w a s d move";
+    cout << endl;
+    cout<<"moves "<<moveCount << endl;              
+    cout<<"esc\tpause" << endl;                           
+    cout<<"w a s d move"<< endl;
     return zero;                                 
 }
 
 void displayStopwatch(){
-    cursorLocation(40,12);
     cout<<"time "<<((CURR-START)/1000)/60<<" : "<<((CURR-START)/1000)%60<<"."<<((CURR-START)%1000)/100<<"     ";
 }
 
@@ -174,24 +124,22 @@ void pausemenu()
 {
     char pauseop;
     do{
-        menuoutline("pause","esc","resume","n","new game","e","quit");
-        cursorLocation(0,29);
+        cout << "***********GAME PAUSED*********************** \n Esc resume \n N new game \n E exit" << endl;  
         pauseop=input(getch());
         if(pauseop=='N')               
         {
-            reset();
-            cursorLocation(3,20);
-            cout<<"\trestart...";
+            reset();          
+            cout<<"\tRESTARTING...";
             reset();
             gameOn();
             break;
         }
-        else if(pauseop=='E')          
+        else if(pauseop=='E')         
         {
             reset();
             main();
         }
-    }while(pauseop!=27);                
+    }while(pauseop!=27);               
 }
 
 void stopwatch(int toggle)  
@@ -219,7 +167,6 @@ bool inputhandler(int zero)
     int oJ=zero%10;                     
     bool keyHit = false;
     char MOVE;                          
-    cursorLocation(0,29);
     if(kbhit())                         
     {
         MOVE=input(getch());
@@ -251,10 +198,8 @@ bool inputhandler(int zero)
     }
     else if(MOVE==27)                   
     {
-        cursorLocation(3, 16);
         cout<<"     ";
         stopwatch(-1);                  
-        displayboardFrame();
     }
     return keyHit;
 }
@@ -283,13 +228,12 @@ void gameOn()
     do{
             createboard();
     }while(checksolvable());        
-    displayboardFrame();
     int zero = displayboard();                      
     do{
         if(inputhandler(zero)){
             zero=displayboard();    
         }
-        displayStopwatch();                         
+        // displayStopwatch();                         
     }while(!checkboard());          
 }
 
@@ -320,28 +264,19 @@ void statsView()
 {
   char option;
   system("cls");
-  menuoutline("stats","\0","\0","\0","\0","\0","\0");
-  cursorLocation(3,14);
-  cout<<"total games\t"<<left<<setw(10)<<stored.MATCHES;
-  cursorLocation(3,16);
-  cout<<"total time\t"<<((stored.TIME)/1000)/60<<" : "<<((stored.TIME)/1000)%60<<"."<<((stored.TIME)%1000)/100<<" ";
-  cursorLocation(3,18);
-  cout<<"total moves\t"<<right<<setw(12)<<stored.MOVES;
-  cursorLocation(3,20);
-  cout<<"min time\t"<<(stored.MINTIME/1000)/60<<" : "<<((stored.MINTIME)/1000)%60<<"."<<((stored.MINTIME)%1000)/100;
-  cursorLocation(3,22);
-  cout<<"min moves\t"<<stored.MINMOVES;
-  cursorLocation(3,24);
-  if(readSuccess)                           
+  cout<<"TOTAL GAMES PLAYED\t"<<left<<setw(10)<<stored.MATCHES<< endl;  
+  cout<<"TOTAL TIME PLAYED\t"<<((stored.TIME)/1000)/60<<" : "<<((stored.TIME)/1000)%60<<"."<<((stored.TIME)%1000)/100<<" " << endl;
+  cout<<"TOTAL MOVES\t"<<right<<setw(12)<<stored.MOVES << endl;
+  cout<<"MIN TIME IN ONE GAME\t"<<(stored.MINTIME/1000)/60<<" : "<<((stored.MINTIME)/1000)%60<<"."<<((stored.MINTIME)%1000)/100 << endl;
+  cout<<"MIN MOVES IN ONE GAME\t"<<stored.MINMOVES << endl ;
+  if(readSuccess)                          
   {
-      cout<<"avg time"<<setw(10)<<((stored.TIME/stored.MATCHES)/1000)/60<<" : "<<((stored.TIME/stored.MATCHES)/1000)%60<<"."<<((stored.TIME/stored.MATCHES)%1000)/100;
-      cursorLocation(3,26);
-      cout<<"avg moves\t"<<(stored.MOVES/stored.MATCHES);
-      cursorLocation(3,28);
+      cout<<"AVERAGE TIME"<<setw(10)<<((stored.TIME/stored.MATCHES)/1000)/60<<" : "<<((stored.TIME/stored.MATCHES)/1000)%60<<"."<<((stored.TIME/stored.MATCHES)%1000)/100 << endl;
+      cout<<"AVERAGE MOVES\t"<<(stored.MOVES/stored.MATCHES) << endl;
   }
-  cout<<"b\tback";
+  cout<<"B\t back" << endl;
   do{
-    cursorLocation(0,29);
+    
     option=input(getch());
   }while(option!='B');
 }
@@ -351,12 +286,10 @@ void titlescreen()
     char option;
     title:
     system("cls");
-    menuoutline("Coursework fifteen","n","new game","s","stats","q","quit");      
-    cursorLocation(0,29);
+    cout << "Coursework fifteen \n N NEW GAME \n S STATISTICS \n Q QUIT" << endl;     
     option=input(getch());
     if(option=='N')                         
     {
-        cursorLocation(8,20);
         cout<<"start";
         return;                             
     }
@@ -367,9 +300,7 @@ void titlescreen()
     }
     else if(option=='Q')                    
     {
-        cursorLocation(8,20);
         cout<<"Y\tCONFIRM";
-        cursorLocation(0,29);
         option=input(getch());
         if(option=='Y'){
             system("cls");

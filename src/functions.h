@@ -28,12 +28,9 @@ bool firstHit=false;
 bool readSuccess;       
 
 bool readStats();       
-BOOL cursorLocation(const WORD,const WORD);
-void menuoutline(const string&,const string&,const string&,const string&,const string&,const string&,const string&);
 void createboard();
 int checksolvable();
 char input(char);
-void displayboardFrame();
 int displayboard();
 void reset();
 void pausemenu();
@@ -46,7 +43,6 @@ void updateStats();
 void statsView();
 void titlescreen();
 void swapfunc(short int*,short int*);
-void windowSetup();
 
 
 #endif
