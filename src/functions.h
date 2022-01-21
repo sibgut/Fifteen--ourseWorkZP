@@ -6,9 +6,10 @@
 #include<iostream>
 #include<iomanip>
 #include<time.h>
-#include<windows.h>
 #include<stdbool.h>
-#include<conio.h>
+#include <stdio.h>
+#include <sys/select.h>
+#include <termios.h>
 
 using namespace std;
 
@@ -21,12 +22,11 @@ struct stats{
 }stored;
 
 short int board[4][4];   
-
-clock_t START,CURR;     
+int _kbhit();
+int START = 0,CURR = 0;     
 int moveCount=0;        
 bool firstHit=false;   
 bool readSuccess;       
-
 bool readStats();       
 void createboard();
 int checksolvable();

@@ -126,7 +126,7 @@ void pausemenu()
     char pauseop;
     do{
         cout << "***********GAME PAUSED*********************** \n Esc resume \n N new game \n E exit" << endl;  
-        pauseop=input(getch());
+        pauseop=input(getchar());
         if(pauseop=='N')               
         {
             reset();          
@@ -162,15 +162,16 @@ void swapfunc(short int *x,short int *y)
     (*x)=(*y);
     (*y)=temp;
 }
+
 bool inputhandler(int zero)
 {
     int oI=zero/10;
     int oJ=zero%10;                     
     bool keyHit = false;
     char MOVE;                          
-    if(kbhit())                         
+    if(getchar())                         
     {
-        MOVE=input(getch());
+        MOVE=input(getchar());
         firstHit=true;                  
         keyHit = true;
     }
@@ -264,7 +265,7 @@ void updateStats()
 void statsView()                            
 {
   char option;
-  system("cls");
+  system("clear");
   cout<<"TOTAL GAMES PLAYED\t"<<left<<setw(10)<<stored.MATCHES<< endl;  
   cout<<"TOTAL TIME PLAYED\t"<<((stored.TIME)/1000)/60<<" : "<<((stored.TIME)/1000)%60<<"."<<((stored.TIME)%1000)/100<<" " << endl;
   cout<<"TOTAL MOVES\t"<<right<<setw(12)<<stored.MOVES << endl;
@@ -278,7 +279,7 @@ void statsView()
   cout<<"B\t back" << endl;
   do{
     
-    option=input(getch());
+    option=input(getchar());
   }while(option!='B');
 }
 
@@ -289,7 +290,7 @@ void titlescreen()
     // system("cls");
     system("clear");
     cout << "Coursework fifteen \n N NEW GAME \n S STATISTICS \n Q QUIT" << endl;     
-    option=input(getch());
+    option=input(getchar());
     if(option=='N')                         
     {
         cout<<"start";
@@ -303,7 +304,7 @@ void titlescreen()
     else if(option=='Q')                    
     {
         cout<<"Y\tCONFIRM";
-        option=input(getch());
+        option=input(getchar());
         if(option=='Y'){
             // system("cls");
             system("clear");
