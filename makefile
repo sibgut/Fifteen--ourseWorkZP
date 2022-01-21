@@ -1,13 +1,14 @@
-all: bin/Fifteen-CourseWorkZP bin/Fifteen-CourseWorkZP-test
+CC=g++
+CFLAGS=-c -Wall
+LDFLAGS=
+SOURCES=build/src/fifteen.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=bin/Fifteen-CourseWorkZP
 
-bin/Fifteen-CourseWorkZP: build/src/fifteen.o  
+all: $(SOURCES) $(EXECUTABLE)
+	
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-	gcc -Wall -Werror build/src/fifteen.o -o bin/Fifteen-CourseWorkZP
-
-builfifteen/src/fifteen.o: src/fifteen.cpp
-	gcc -Wall -Werror -I src -c src/fifteen.cpp -o build/src/fifteen.o
-
-clean:
-	rm -rf build/test/*.o build/src/*.o bin/Fifteen-CourseWorkZP bin/Fifteen-CourseWorkZP-test
-
-.PHONY: all clean
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
