@@ -1,12 +1,18 @@
-all: bin/Fifteen-CourseWorkZP  bin/Fifteen-CourseWorkZP-test
+# Specify compiler
+CC=gcc
+ 
+# Specify linker
+LINK=gcc
+ 
+# Build all target
+.PHONY : all
+all : app
 
-bin/Fifteen-CourseWorkZP: build/src/fifteen.o 
-	gcc -Wall -Werror build/src/fifteen.o
-
-build/src/fifteen.o: src/fifteen.cpp
-	gcc -Wall -Werror -I src -c src/fifteen.cpp -o build/src/fifteen.o
-
-clean:
-	rm -rf build/test/*.o build/src/*.o bin/Fifteen-CourseWorkZP
-
-.PHONY: all clean
+# Compile the source files into object files
+fifteen.o : fifteen.cpp
+$(CC) -c fifteen.cpp -o fifteen.o
+ 
+# Clean target
+.PHONY : clean
+clean :
+rm fifteen.o app
