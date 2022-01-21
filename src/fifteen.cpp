@@ -83,7 +83,8 @@ char input(char Low)
 
 int displayboard()                                             
 {
-    system("cls");
+    //system("cls");
+    system("clear");
     short int zero, posI = 0, posJ = 0;                         
     short int posY=3, posX = 30;                                
     for( ; posY < 10 ; posY += 2, posI++){
@@ -285,7 +286,8 @@ void titlescreen()
 {
     char option;
     title:
-    system("cls");
+    // system("cls");
+    system("clear");
     cout << "Coursework fifteen \n N NEW GAME \n S STATISTICS \n Q QUIT" << endl;     
     option=input(getch());
     if(option=='N')                         
@@ -303,7 +305,8 @@ void titlescreen()
         cout<<"Y\tCONFIRM";
         option=input(getch());
         if(option=='Y'){
-            system("cls");
+            // system("cls");
+            system("clear");
             exit(0);                                               
         }
         else
