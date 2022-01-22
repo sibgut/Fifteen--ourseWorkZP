@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "functions.h"
 // int moveCount=0;
 
@@ -446,4 +445,3 @@ void titlescreen()
     else
         goto title;
 }
->>>>>>> 0cbb731d6c0fd6508924dce25cff759bb044c84b
