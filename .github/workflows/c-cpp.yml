@@ -13,5 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: make
-      run: make
+    - name: Building pr
+      run: make   
+    - name: Test
+      run: ./bin/CourseWorkZP-test
