@@ -14,5 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install dependencies
+    - name: Build
       run: make
+      
+    - name: Test
+      run: ./bin/CourseWorkZP-test
